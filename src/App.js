@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import FieldTodo from './components/FieldTodo';
 
 
 function CounterHeader (props) {
@@ -20,6 +21,7 @@ export class AppClass extends React.Component {// классовый React-ко�
       userAgeRange: "",
       userActiveStudent: "",
     },
+    todo: []
   };
 
   // constructor(props) {
@@ -49,6 +51,12 @@ export class AppClass extends React.Component {// классовый React-ко�
     const { target } = e;
     this.setState({ textVal: target.value } )
   };
+
+  handleTodoClick = (e) => {
+    e.preventDefault();
+    let {data, todo} = this.state;
+    this.setState({todo: [...todo, data]});
+  }
 
   handleChange = (e) => {
     const {target} = e;
@@ -99,7 +107,7 @@ export class AppClass extends React.Component {// классовый React-ко�
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
           <h1>Class-based component</h1>
-
+          <input type="button" onClick={ this.handleButtonClick } value="Increment" />
           <CounterHeader cnt={ this.state.counter } name="Some React name"   />
           <TextInput
             name="userName"
@@ -109,7 +117,7 @@ export class AppClass extends React.Component {// классовый React-ко�
           <br />
           <Select
             name="userAgeRange"
-            value={ this.state.userAgeRange }
+            value={ this.state.userAgeRange}
             onChange={ this.handleChange }
             options={ this.getSelectOptions() }
           />
@@ -121,8 +129,8 @@ export class AppClass extends React.Component {// классовый React-ко�
             text="Студент отчислен"
           />
           <br />
-          <input type="button" onClick={ this.handleButtonClick } value="Increment" />
-
+          <button onClick={this.handleTodoClick}>add Todo</button>
+          <FieldTodo todo={this.state.todo} />
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
